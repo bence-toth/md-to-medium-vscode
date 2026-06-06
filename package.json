@@ -4,11 +4,11 @@
   "description": "Copy Markdown as Medium-ready rich HTML",
   "version": "0.1.0",
   "private": true,
-  "publisher": "tbd",
+  "publisher": "bence-toth",
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tbd/markdown-to-medium-vscode"
+    "url": "https://github.com/bence-toth/md-to-medium-vscode"
   },
   "engines": {
     "vscode": "^1.90.0"
