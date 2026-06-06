@@ -1,0 +1,14 @@
+src/
+scripts/
+out/
+.vscode-test/
+coverage/
+tsconfig.json
+.eslintrc.json
+.prettierrc.json
+**/*.map
+**/*.ts
+!node_modules/md-to-medium/**
+!node_modules/marked/**
+!node_modules/marked-gfm-heading-id/**
+node_modules/
