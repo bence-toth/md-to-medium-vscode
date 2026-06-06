@@ -4,6 +4,3 @@ out/
 *.vsix
 .vscode-test/
 coverage/
-CLAUDE.md
-ISSUES.md
-PLAN.md
