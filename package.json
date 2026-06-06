@@ -13,7 +13,25 @@
     "Formatters"
   ],
   "main": "./dist/extension.js",
-  "contributes": {},
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "mdToMedium.copyAsMediumHtml",
+        "title": "Markdown to Medium: Copy as Medium HTML"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "mdToMedium.copyAsMediumHtml",
+          "when": "resourceLangId == markdown"
+        }
+      ]
+    }
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "watch": "node scripts/build.mjs --watch",
