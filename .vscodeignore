@@ -8,7 +8,11 @@ tsconfig.json
 .prettierrc.json
 **/*.map
 **/*.ts
+CLAUDE.md
+ISSUES.md
+PLAN.md
+# Exclude all of node_modules, then re-include the runtime deps below
+node_modules/
 !node_modules/md-to-medium/**
 !node_modules/marked/**
 !node_modules/marked-gfm-heading-id/**
-node_modules/
