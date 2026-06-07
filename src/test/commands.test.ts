@@ -9,7 +9,6 @@ const mockOutputChannel = vi.hoisted(() => ({
 vi.mock('vscode', () => ({
   window: {
     activeTextEditor: undefined,
-    showInformationMessage: vi.fn().mockResolvedValue(undefined),
     showWarningMessage: vi.fn().mockResolvedValue(undefined),
     showErrorMessage: vi.fn().mockResolvedValue(undefined),
   },
@@ -28,10 +27,15 @@ vi.mock('../outputChannel.js', () => ({
   disposeOutputChannel: vi.fn(),
 }));
 
+vi.mock('../statusBar.js', () => ({
+  flashStatusBarItem: vi.fn(),
+}));
+
 import * as vscode from 'vscode';
 import { copyAsMediumHtml } from '../commands.js';
 import { markdownToMediumHtml } from '../converter.js';
 import { copyHtmlToClipboard } from '../clipboard.js';
+import { flashStatusBarItem } from '../statusBar.js';
 
 function makeEditor(text: string, languageId = 'markdown') {
   return { document: { getText: () => text, languageId } };
@@ -50,7 +54,11 @@ describe('copyAsMediumHtml', () => {
     await copyAsMediumHtml();
     expect(markdownToMediumHtml).toHaveBeenCalledWith('# Hello');
     expect(copyHtmlToClipboard).toHaveBeenCalledWith('<p>html</p>');
-    expect(vscode.window.showInformationMessage).toHaveBeenCalledWith('Copied as Medium HTML');
+    expect(flashStatusBarItem).toHaveBeenCalledWith(
+      '$(check) Copied to clipboard',
+      3000,
+      'success',
+    );
   });
 
   it('shows a warning when no markdown editor is active', async () => {

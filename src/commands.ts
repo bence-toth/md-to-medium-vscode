@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { markdownToMediumHtml } from './converter.js';
 import { copyHtmlToClipboard } from './clipboard.js';
 import { getOutputChannel } from './outputChannel.js';
+import { flashStatusBarItem } from './statusBar.js';
 
 const LINUX_CLIPBOARD_HINT =
   'On Linux, a clipboard tool is required. Install one of: wl-clipboard (Wayland), xclip, or xsel.';
@@ -42,7 +43,7 @@ export async function copyAsMediumHtml(): Promise<void> {
     return;
   }
 
-  await vscode.window.showInformationMessage('Copied as Medium HTML');
+  flashStatusBarItem('$(check) Copied to clipboard', 3000, 'success');
 }
 
 async function showError(prefix: string, err: unknown): Promise<void> {
