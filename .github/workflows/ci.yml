@@ -42,3 +42,15 @@ jobs:
 
       - name: Package
         run: npm run package
+
+  all-checks:
+    name: All checks passed
+    runs-on: ubuntu-latest
+    needs: [ci]
+    if: always()
+    steps:
+      - name: Check matrix result
+        run: |
+          if [ "${{ needs.ci.result }}" != "success" ]; then
+            exit 1
+          fi
