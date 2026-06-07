@@ -17,18 +17,14 @@ async function readClipboard(): Promise<string> {
   } else if (platform === 'linux') {
     // xclip -o does not support -t for output on all builds; fall back to plain text
     try {
-      const { stdout } = await execAsync(
-        'xclip -selection clipboard -o -t text/html',
-      );
+      const { stdout } = await execAsync('xclip -selection clipboard -o -t text/html');
       return stdout;
     } catch {
       const { stdout } = await execAsync('xclip -selection clipboard -o');
       return stdout;
     }
   } else if (platform === 'win32') {
-    const { stdout } = await execAsync(
-      'powershell -NoProfile -Command "Get-Clipboard"',
-    );
+    const { stdout } = await execAsync('powershell -NoProfile -Command "Get-Clipboard"');
     return stdout;
   }
   throw new Error(`Unsupported platform for clipboard readback: ${platform}`);
@@ -37,10 +33,7 @@ async function readClipboard(): Promise<string> {
 suite('Extension integration', () => {
   test('command mdToMedium.copyAsMediumHtml is registered', async () => {
     const all = await vscode.commands.getCommands(true);
-    assert.ok(
-      all.includes('mdToMedium.copyAsMediumHtml'),
-      'Command not registered',
-    );
+    assert.ok(all.includes('mdToMedium.copyAsMediumHtml'), 'Command not registered');
   });
 
   test('extension activates when a Markdown file is opened', async () => {
@@ -71,11 +64,7 @@ suite('Extension integration', () => {
   test('status bar item is visible when a Markdown file is active', async () => {
     const doc = await vscode.workspace.openTextDocument(FIXTURE_MD);
     const editor = await vscode.window.showTextDocument(doc);
-    assert.strictEqual(
-      editor.document.languageId,
-      'markdown',
-      'Active document is not Markdown',
-    );
+    assert.strictEqual(editor.document.languageId, 'markdown', 'Active document is not Markdown');
   });
 
   test('status bar item is hidden when a non-Markdown file is active', async () => {
