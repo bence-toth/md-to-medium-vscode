@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     exclude: ['**/node_modules/**', '**/test/integration/**'],
     coverage: {
-      exclude: ['scripts/**', 'src/test/integration/**'],
+      exclude: ['scripts/**', 'src/test/integration/**', 'out/**', '.vscode-test.mjs'],
     },
   },
 });
