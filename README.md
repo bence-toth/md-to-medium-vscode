@@ -30,4 +30,4 @@ The extension is unsigned and unpublished. VS Code may show an "extension is not
 
 ## License
 
-MIT
+[MIT](LICENSE), do what you will.
