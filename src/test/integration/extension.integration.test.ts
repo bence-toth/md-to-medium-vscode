@@ -23,6 +23,7 @@ async function readClipboard(): Promise<string> {
   const scriptFile = path.join(os.tmpdir(), `m2m-script-${process.pid}.applescript`);
   const script = [
     `set outRef to open for access (POSIX file ${JSON.stringify(outFile)}) with write permission`,
+    `set eof of outRef to 0`,
     `write (the clipboard as «class HTML») to outRef`,
     `close access outRef`,
   ].join('\n');

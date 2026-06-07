@@ -95,10 +95,6 @@ jobs:
           cache: npm
       - run: npm ci
 
-      - name: Install xclip
-        if: runner.os == 'Linux'
-        run: sudo apt-get update -y && sudo apt-get install -y xclip
-
       - name: Build extension
         run: npm run build
 
