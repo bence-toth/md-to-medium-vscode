@@ -20,14 +20,14 @@ The command operates on the full in-memory document (unsaved edits included).
 
 Powered by [`md-to-medium`](https://www.npmjs.com/package/md-to-medium). HTML is written to the clipboard using OS-native tools so that the `text/html` MIME type is preserved — plain-text clipboard writes are rejected by Medium's editor.
 
-## Local install
+## Local install from VSIX
 
 ```sh
 npm run package
 code --install-extension markdown-to-medium-vscode-*.vsix
 ```
 
-The extension is unsigned and unpublished. VS Code may show an "extension is not from the marketplace" warning — this is expected.
+Installing a locally built VSIX bypasses the marketplace. VS Code may show an "extension is not from the marketplace" warning — this is expected when using a local build instead of the published version.
 
 ## License
 
