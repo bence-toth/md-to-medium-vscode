@@ -37,15 +37,26 @@ async function readClipboard(): Promise<string> {
   }
 }
 
+async function waitForActivation(ext: vscode.Extension<unknown>, timeoutMs = 5000): Promise<void> {
+  const deadline = Date.now() + timeoutMs;
+  while (!ext.isActive) {
+    if (Date.now() > deadline) {
+      throw new Error('Extension did not activate within timeout');
+    }
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+}
+
 suite('Extension integration', () => {
   suiteSetup(async () => {
-    // Opening a .md file triggers the onLanguage:markdown activation event
+    // Opening a .md file triggers the onLanguage:markdown activation event;
+    // wait for it to complete naturally rather than forcing ext.activate().
     const doc = await vscode.workspace.openTextDocument(workspacePath('fixture.md'));
     await vscode.window.showTextDocument(doc);
 
     const ext = vscode.extensions.getExtension('bence-toth.markdown-to-medium-vscode');
     assert.ok(ext, 'Extension not found');
-    await ext.activate();
+    await waitForActivation(ext);
   });
 
   test('command mdToMedium.copyAsMediumHtml is registered', async () => {

@@ -95,9 +95,6 @@ jobs:
           cache: npm
       - run: npm ci
 
-      - name: Build extension
-        run: npm run build
-
       - name: Run integration tests
         if: runner.os == 'Linux'
         run: xvfb-run -a npm run test:integration
