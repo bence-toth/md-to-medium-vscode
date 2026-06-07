@@ -36,7 +36,7 @@ function makeEditor(languageId: string) {
 }
 
 function makeContext() {
-  return { subscriptions: { push: vi.fn() } } as never;
+  return { subscriptions: { push: vi.fn() } } as unknown as vscode.ExtensionContext;
 }
 
 beforeEach(() => {
@@ -44,7 +44,9 @@ beforeEach(() => {
   editorChangeCallback = undefined;
   disposeStatusBarItem();
   (vscode.window as unknown as { activeTextEditor: unknown }).activeTextEditor = undefined;
-  vi.mocked(vscode.window.createStatusBarItem).mockReturnValue(mockItem);
+  vi.mocked(vscode.window.createStatusBarItem).mockReturnValue(
+    mockItem as unknown as vscode.StatusBarItem,
+  );
   vi.mocked(vscode.window.onDidChangeActiveTextEditor).mockImplementation((cb) => {
     editorChangeCallback = cb as (editor: unknown) => void;
     return { dispose: vi.fn() } as never;
