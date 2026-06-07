@@ -1,21 +1,25 @@
 import * as vscode from 'vscode';
 
+const ITEM_TEXT = '$(preview) Copy to Medium';
+
+let item: vscode.StatusBarItem | undefined;
+
 export function isMarkdownEditor(editor: vscode.TextEditor | undefined): boolean {
   return editor?.document.languageId === 'markdown';
 }
 
 export function createStatusBarItem(context: vscode.ExtensionContext): vscode.StatusBarItem {
-  const item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 0);
-  item.text = '$(clippy) Medium';
+  item = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 0);
+  item.text = ITEM_TEXT;
   item.tooltip = 'Copy as Medium HTML';
   item.command = 'mdToMedium.copyAsMediumHtml';
   context.subscriptions.push(item);
 
   const update = (editor: vscode.TextEditor | undefined) => {
     if (isMarkdownEditor(editor)) {
-      item.show();
+      item!.show();
     } else {
-      item.hide();
+      item!.hide();
     }
   };
 
@@ -24,4 +28,32 @@ export function createStatusBarItem(context: vscode.ExtensionContext): vscode.St
   context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(update));
 
   return item;
+}
+
+export function flashStatusBarItem(
+  text: string,
+  duration: number,
+  kind: 'success' | 'error',
+): void {
+  if (!item) {
+    return;
+  }
+  item.text = text;
+  if (kind === 'error') {
+    item.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
+    item.color = undefined;
+  } else {
+    item.color = new vscode.ThemeColor('testing.iconPassed');
+    item.backgroundColor = undefined;
+  }
+  setTimeout(() => {
+    item!.text = ITEM_TEXT;
+    item!.color = undefined;
+    item!.backgroundColor = undefined;
+  }, duration);
+}
+
+export function disposeStatusBarItem(): void {
+  item?.dispose();
+  item = undefined;
 }
