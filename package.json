@@ -3,19 +3,29 @@
   "displayName": "Markdown to Medium",
   "description": "Copy Markdown as Medium-ready rich HTML",
   "version": "1.0.0",
-  "private": true,
   "publisher": "bence-toth",
   "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/bence-toth/md-to-medium-vscode"
   },
+  "bugs": {
+    "url": "https://github.com/bence-toth/md-to-medium-vscode/issues"
+  },
+  "homepage": "https://github.com/bence-toth/md-to-medium-vscode#readme",
   "engines": {
     "vscode": "^1.90.0"
   },
   "categories": [
     "Other",
     "Formatters"
+  ],
+  "keywords": [
+    "markdown",
+    "medium",
+    "clipboard",
+    "html",
+    "publishing"
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
