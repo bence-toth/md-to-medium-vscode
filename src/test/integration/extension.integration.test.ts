@@ -28,7 +28,7 @@ async function readClipboard(): Promise<string> {
   ].join('\n');
   try {
     await fs.writeFile(scriptFile, script, 'utf-8');
-    await execAsync(`osascript ${scriptFile}`);
+    await execAsync(`osascript ${JSON.stringify(scriptFile)}`);
     return await fs.readFile(outFile, 'utf-8');
   } finally {
     await fs.unlink(scriptFile).catch(() => {});
@@ -82,13 +82,13 @@ suite('Extension integration', () => {
     );
   });
 
-  test('status bar item is visible when a Markdown file is active', async () => {
+  test('active editor language is markdown when a Markdown file is open', async () => {
     const doc = await vscode.workspace.openTextDocument(workspacePath('fixture.md'));
     const editor = await vscode.window.showTextDocument(doc);
     assert.strictEqual(editor.document.languageId, 'markdown', 'Active document is not Markdown');
   });
 
-  test('status bar item is hidden when a non-Markdown file is active', async () => {
+  test('active editor language is not markdown when a non-Markdown file is open', async () => {
     const doc = await vscode.workspace.openTextDocument(workspacePath('fixture.txt'));
     const editor = await vscode.window.showTextDocument(doc);
     assert.notStrictEqual(
