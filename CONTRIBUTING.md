@@ -27,7 +27,7 @@ Every push to `main` and every pull request runs the full quality suite (lint, t
    git push origin vx.y.z
    ```
 5. The release workflow creates a GitHub release automatically, attaches the `.vsix` as a release asset, and populates release notes from commits since the previous tag.
-6. Download the `.vsix` from the GitHub release, then publish it to the marketplace:
+6. Download the `.vsix` from the GitHub release, then publish it to the marketplace on [Manage Publishers & Extensions](https://marketplace.visualstudio.com/manage/publishers/bence-toth) or via `vsce`:
    ```
    vsce publish --packagePath markdown-to-medium-vscode-x.y.z.vsix
    ```
