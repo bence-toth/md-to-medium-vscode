@@ -23,7 +23,8 @@ Powered by [`md-to-medium`](https://www.npmjs.com/package/md-to-medium). HTML is
 ## Local install
 
 ```sh
-code --install-extension markdown-to-medium-vscode-0.1.0.vsix
+npm run package
+code --install-extension markdown-to-medium-vscode-*.vsix
 ```
 
 The extension is unsigned and unpublished. VS Code may show an "extension is not from the marketplace" warning — this is expected.
