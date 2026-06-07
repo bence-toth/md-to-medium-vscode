@@ -13,7 +13,9 @@ import { getOutputChannel, disposeOutputChannel } from '../outputChannel.js';
 
 beforeEach(() => {
   vi.clearAllMocks();
-  vi.mocked(vscode.window.createOutputChannel).mockReturnValue(mockChannel);
+  vi.mocked(vscode.window.createOutputChannel).mockReturnValue(
+    mockChannel as unknown as vscode.LogOutputChannel,
+  );
   disposeOutputChannel();
 });
 
@@ -37,7 +39,9 @@ describe('disposeOutputChannel', () => {
     disposeOutputChannel();
     expect(mockChannel.dispose).toHaveBeenCalled();
     vi.clearAllMocks();
-    vi.mocked(vscode.window.createOutputChannel).mockReturnValue(mockChannel);
+    vi.mocked(vscode.window.createOutputChannel).mockReturnValue(
+      mockChannel as unknown as vscode.LogOutputChannel,
+    );
     getOutputChannel();
     expect(vscode.window.createOutputChannel).toHaveBeenCalledTimes(1);
   });
