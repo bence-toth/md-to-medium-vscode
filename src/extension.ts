@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { copyAsMediumHtml } from './commands.js';
 import { disposeOutputChannel } from './outputChannel.js';
-import { createStatusBarItem } from './statusBar.js';
+import { createStatusBarItem, disposeStatusBarItem } from './statusBar.js';
 
 export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
@@ -12,4 +12,5 @@ export function activate(context: vscode.ExtensionContext): void {
 
 export function deactivate(): void {
   disposeOutputChannel();
+  disposeStatusBarItem();
 }

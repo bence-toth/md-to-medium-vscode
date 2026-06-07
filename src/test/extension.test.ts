@@ -17,9 +17,15 @@ vi.mock('../outputChannel.js', () => ({
   getOutputChannel: vi.fn(),
 }));
 
+vi.mock('../statusBar.js', () => ({
+  createStatusBarItem: vi.fn(),
+  disposeStatusBarItem: vi.fn(),
+}));
+
 import * as vscode from 'vscode';
 import { activate, deactivate } from '../extension.js';
 import { disposeOutputChannel } from '../outputChannel.js';
+import { createStatusBarItem, disposeStatusBarItem } from '../statusBar.js';
 
 function makeContext() {
   return { subscriptions: { push: vi.fn() } } as never;
@@ -36,7 +42,7 @@ describe('activate', () => {
 
   it('creates a status bar item', () => {
     activate(makeContext());
-    expect(vscode.window.createStatusBarItem).toHaveBeenCalled();
+    expect(createStatusBarItem).toHaveBeenCalled();
   });
 });
 
@@ -44,5 +50,10 @@ describe('deactivate', () => {
   it('disposes the output channel', () => {
     deactivate();
     expect(disposeOutputChannel).toHaveBeenCalled();
+  });
+
+  it('disposes the status bar item', () => {
+    deactivate();
+    expect(disposeStatusBarItem).toHaveBeenCalled();
   });
 });
