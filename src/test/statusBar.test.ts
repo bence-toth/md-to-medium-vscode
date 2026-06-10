@@ -143,6 +143,27 @@ describe('flashStatusBarItem', () => {
     expect(mockItem.color).toBeUndefined();
     expect(mockItem.backgroundColor).toBeUndefined();
   });
+
+  it('cancels the prior restore timer when flashed again before it fires', () => {
+    createStatusBarItem(makeContext());
+    flashStatusBarItem('$(check) First', 3000, 'success');
+    vi.advanceTimersByTime(2000);
+    flashStatusBarItem('$(check) Second', 3000, 'success');
+    // The first flash's timer would have fired at t=3000 and reset the text.
+    // If it was cancelled, at t=4000 the text should still be "Second".
+    vi.advanceTimersByTime(2000);
+    expect(mockItem.text).toBe('$(check) Second');
+    // And the second flash's timer should still fire at t=5000.
+    vi.advanceTimersByTime(1000);
+    expect(mockItem.text).toBe('$(preview) Copy to Medium');
+  });
+
+  it('does not throw if the item is disposed before the restore timer fires', () => {
+    createStatusBarItem(makeContext());
+    flashStatusBarItem('$(check) Copied', 3000, 'success');
+    disposeStatusBarItem();
+    expect(() => vi.advanceTimersByTime(3000)).not.toThrow();
+  });
 });
 
 describe('disposeStatusBarItem', () => {
