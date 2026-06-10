@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 const ITEM_TEXT = '$(preview) Copy to Medium';
 
 let item: vscode.StatusBarItem | undefined;
+let flashTimer: ReturnType<typeof setTimeout> | undefined;
 
 export function isMarkdownEditor(editor: vscode.TextEditor | undefined): boolean {
   return editor?.document.languageId === 'markdown';
@@ -38,6 +39,9 @@ export function flashStatusBarItem(
   if (!item) {
     return;
   }
+  if (flashTimer) {
+    clearTimeout(flashTimer);
+  }
   item.text = text;
   if (kind === 'error') {
     item.backgroundColor = new vscode.ThemeColor('statusBarItem.errorBackground');
@@ -46,7 +50,8 @@ export function flashStatusBarItem(
     item.color = new vscode.ThemeColor('testing.iconPassed');
     item.backgroundColor = undefined;
   }
-  setTimeout(() => {
+  flashTimer = setTimeout(() => {
+    flashTimer = undefined;
     item!.text = ITEM_TEXT;
     item!.color = undefined;
     item!.backgroundColor = undefined;
@@ -54,6 +59,10 @@ export function flashStatusBarItem(
 }
 
 export function disposeStatusBarItem(): void {
+  if (flashTimer) {
+    clearTimeout(flashTimer);
+    flashTimer = undefined;
+  }
   item?.dispose();
   item = undefined;
 }
