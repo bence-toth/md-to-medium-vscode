@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.2] — 2026-06-10
+
+### Fixed
+
+- Status bar flash timer is now cleared on rapid copies and on extension deactivation, preventing a stale timer from cutting the latest flash short or throwing after disposal ([#14](https://github.com/bence-toth/md-to-medium-vscode/issues/14)).
+
 ## [1.0.1] — 2026-06-07
 
 ### Fixed
